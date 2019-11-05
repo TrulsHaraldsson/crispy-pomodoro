@@ -2,7 +2,34 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center" align="center" >
+    <h1 class="display-4">Pomodoro</h1>
+    <p id="pomodoroTimer"></p>    
+    <button type="button">START</button>
+    <button type="button">RESET</button>
+    <button type="button">STOP</button>
 </div>
+
+
+<script id="countdown">
+var startSeconds = 30 * 60;     // 30 min in seconds
+var timeLeft = startSeconds;
+var tickFrequency = 1000;       // Milliseconds
+
+var x = setInterval(function() {
+
+  timeLeft = timeLeft - 1;
+  
+  var minutes = Math.floor(timeLeft / 60 );
+  var seconds = Math.floor(timeLeft % 60 );
+
+  document.getElementById("pomodoroTimer").innerHTML = minutes + "m " + seconds + "s ";
+  console.log("minutes: " + minutes);
+  console.log("seconds: " + seconds);
+  console.log("timeLeft: " + timeLeft);
+
+  if (timeLeft < 0) {
+      timeLeft = 0;
+  }
+}, tickFrequency);
+</script>
