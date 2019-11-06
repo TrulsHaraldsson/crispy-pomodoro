@@ -1,13 +1,13 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Pomodoro";
 }
 
 <div class="text-center" align="center" >
-    <h1 id="pomodoroHeader"class="display-4">Pomodoro</h1>
-    <p id="pomodoroTimer">0m 0s</p>    
-    <button type="button" onclick="start_countdown()">START</button>
-    <button type="button" onclick="reset_countdown()">RESET</button>
-    <button type="button" onclick="stop_countdown()">STOP</button>
+    <h1 id="pomodoroHeader" class="display-1">Pomodoro</h1>
+    <h2 id="pomodoroTimer" class="display-2">30m 00s</h2>    
+    <button type="button" class="btn btn-outline-dark" onclick="start_countdown()">START</button>
+    <button type="button" class="btn btn-outline-dark" onclick="reset_countdown()">RESET</button>
+    <button type="button" class="btn btn-outline-dark" onclick="stop_countdown()">STOP</button>
 </div>
 
 
@@ -15,11 +15,13 @@
 var FOCUS_STATE = "POMODORO";
 var BREAK_STATE = "BREAK";
 var focusTimeLimit = 30 * 60;
-var breakTimeLimit = 5 * 60;
+var breakTimeLimit = 60;
 var timeLeft = focusTimeLimit;
 var tickFrequency = 1000;       // Milliseconds
 var currentState = FOCUS_STATE.valueOf();
 var timerID = null;
+displayTimer(timeLeft);
+displayHeader(currentState);
 
 function start_countdown() {
     if (timerID === null){
@@ -46,6 +48,17 @@ function reset_countdown() {
             console.log("reset break state")
         }
     }
+    displayTimer(timeLeft)
+}
+
+function displayTimer(secondsLeft){
+    var minutes = Math.floor(secondsLeft / 60 );
+    var seconds = Math.floor(secondsLeft % 60 );
+    document.getElementById("pomodoroTimer").innerHTML = minutes + "m " + seconds + "s ";
+}
+
+function displayHeader(headerText) {
+    document.getElementById("pomodoroHeader").innerHTML = headerText
 }
 
 function countdown() {
@@ -55,23 +68,18 @@ function countdown() {
     if (timeLeft < 0) {
         if (currentState === FOCUS_STATE) {
             currentState = BREAK_STATE.valueOf();
-            console.log("Changing state to break state")
         }else {
             if (currentState === BREAK_STATE) {
                 currentState = FOCUS_STATE.valueOf();
-                console.log("Changing state to focus state")
             }
         }
+        displayHeader(currentState);
         stop_countdown();
         reset_countdown();
         start_countdown();
     }
     
-    var minutes = Math.floor(timeLeft / 60 );
-    var seconds = Math.floor(timeLeft % 60 );
-    
-    document.getElementById("pomodoroTimer").innerHTML = minutes + "m " + seconds + "s ";
-    console.log("timeLeft: " + timeLeft);
+    displayTimer(timeLeft);
 }
 
 </script>
