@@ -10,6 +10,7 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
+  - group: Pomodoro # Contains azureSubscriptionID
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
@@ -24,7 +25,6 @@ steps:
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
-#    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
@@ -45,3 +45,9 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: drop'
   condition: succeeded()
+
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: '$(azureSubscriptionID)'
+    appName: 'sienpomodoro'
+    package: $(System.ArtifactsDirectory)/**/*.zip   
