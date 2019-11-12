@@ -6,6 +6,8 @@
 trigger:
 - feature/*
 
+pr: none
+
 pool:
   vmImage: 'windows-latest'
 
