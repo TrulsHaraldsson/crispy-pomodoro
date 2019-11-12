@@ -51,8 +51,8 @@ steps:
   displayName: 'Publish Artifact: drop'
   condition: succeeded()
 
-- task: AzureWebApp@1
-  inputs:
-    azureSubscription: '$(azureSubscriptionID)'
-    appName: 'sienpomodoro'
-    package: $(System.ArtifactsDirectory)/**/*.zip   
+#- task: AzureWebApp@1
+#  inputs:
+#    azureSubscription: '$(azureSubscriptionID)'
+#    appName: 'sienpomodoro'
+#    package: $(System.ArtifactsDirectory)/**/*.zip   
