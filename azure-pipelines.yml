@@ -4,7 +4,9 @@
 # https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
 
 trigger:
-- master
+- feature/*
+
+pr: none
 
 pool:
   vmImage: 'windows-latest'
@@ -49,8 +51,8 @@ steps:
   displayName: 'Publish Artifact: drop'
   condition: succeeded()
 
-- task: AzureWebApp@1
-  inputs:
-    azureSubscription: '$(azureSubscriptionID)'
-    appName: 'sienpomodoro'
-    package: $(System.ArtifactsDirectory)/**/*.zip   
+#- task: AzureWebApp@1
+#  inputs:
+#    azureSubscription: '$(azureSubscriptionID)'
+#    appName: 'sienpomodoro'
+#    package: $(System.ArtifactsDirectory)/**/*.zip   
