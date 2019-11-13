@@ -4,9 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
 
 trigger:
-- feature/*
-
-pr: none
+- master
 
 pool:
   vmImage: 'windows-latest'
@@ -21,26 +19,30 @@ variables:
   value: 'Release'
 
 stages:
-- stage: BuildAndTest
+- stage: Development
   jobs:
   - job: Build
     steps:
     - bash: echo "Build"
-  - job: Test
+  - job: UnitTests
     dependsOn: Build
     steps:
-    - bash: echo "Test"
+    - bash: echo "Running unit tests"
   - job: Printing
-    dependsOn: Test
+    dependsOn: UnitTest
     steps:
     - bash: echo "Workspace" $(Pipeline.Workspace)
     - bash: echo "Source Directory" $(Build.SourceDirectory)
+    - bash: echo "Artifact Staging Directory" $(Build.ArtifactStagingDirectory)
+    - bash: echo "Binary Directory" $(Build.BinariesDirectory)
+    - bash: echo "Test Result Directory" $(Common.TestResultsDirectory)
 
-- stage: Deploy
+- stage: Production
   jobs:
-  - job: DeployJob
+  - job: Deploy
     steps:
-    - bash: echo "Deploying"
+    - bash: echo "Deploying to production"
+
 #  steps:
 #  - task: NuGetToolInstaller@1
 #  
