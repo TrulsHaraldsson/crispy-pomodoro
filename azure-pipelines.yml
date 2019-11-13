@@ -25,14 +25,16 @@ stages:
   jobs:
   - job: Build
     steps:
-      - bash: echo "Build"
+    - bash: echo "Build"
   - job: Test
     steps:
-      - bash: echo "Test"
+    - bash: echo "Test"
 
 - stage: Deploy
-  steps:
-    - bas: echo "Deploying"
+  jobs:
+  - job: Deploy job
+    steps:
+    - bash: echo "Deploying"
 #  steps:
 #  - task: NuGetToolInstaller@1
 #  
