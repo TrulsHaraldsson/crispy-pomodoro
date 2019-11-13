@@ -29,6 +29,9 @@ stages:
   - job: Test
     steps:
     - bash: echo "Test"
+  - job: Printing
+    steps:
+    - bash: echo $(Pipeline.Workspace)
 
 - stage: Deploy
   jobs:
