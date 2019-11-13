@@ -27,9 +27,11 @@ stages:
     steps:
     - bash: echo "Build"
   - job: Test
+    dependsOn: Build
     steps:
     - bash: echo "Test"
   - job: Printing
+    dependsOn: Test
     steps:
     - bash: echo "Workspace" $(Pipeline.Workspace)
     - bash: echo "Source Directory" $(Build.SourceDirectory)
