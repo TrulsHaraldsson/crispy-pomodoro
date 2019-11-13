@@ -32,7 +32,7 @@ stages:
 
 - stage: Deploy
   jobs:
-  - job: Deploy job
+  - job: DeployJob
     steps:
     - bash: echo "Deploying"
 #  steps:
