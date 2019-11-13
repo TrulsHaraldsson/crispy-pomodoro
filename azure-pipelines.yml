@@ -34,7 +34,7 @@ stages:
         configuration: '$(buildConfiguration)'
   - job: UnitTests
     dependsOn: Build
-    tasks:
+    steps:
     - task: VSTest@2
       inputs:
         platform: '$(buildPlatform)'
