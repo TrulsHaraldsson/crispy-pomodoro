@@ -29,7 +29,7 @@ stages:
     steps:
     - bash: echo "Running unit tests"
   - job: Printing
-    dependsOn: UnitTest
+    dependsOn: UnitTests
     steps:
     - bash: echo "Workspace" $(Pipeline.Workspace)
     - bash: echo "Source Directory" $(Build.SourceDirectory)
