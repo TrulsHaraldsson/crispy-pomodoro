@@ -31,7 +31,8 @@ stages:
     - bash: echo "Test"
   - job: Printing
     steps:
-    - bash: echo $(Pipeline.Workspace)
+    - bash: echo "Workspace" $(Pipeline.Workspace)
+    - bash: echo "Source Directory" $(Build.SourceDirectory)
 
 - stage: Deploy
   jobs:
