@@ -21,7 +21,7 @@ variables:
   value: 'Release'
 
 stages:
-- stage: Build and Test
+- stage: BuildAndTest
   jobs:
   - job: Build
     steps:
