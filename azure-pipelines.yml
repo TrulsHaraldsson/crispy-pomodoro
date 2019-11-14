@@ -6,7 +6,7 @@
 trigger: none   # Do not trigger this on non-pull requests
 
 pr:
-  - feature/*   # Trigger this pipeline if a pull request is created or updated
+- feature/*   # Trigger this pipeline if a pull request is created or updated
 
 pool:
   vmImage: 'windows-latest'
