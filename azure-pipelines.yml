@@ -3,8 +3,10 @@
 # Add steps that publish symbols, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
 
-trigger:
-- master
+trigger: none
+
+pr:
+  - feature/*
 
 pool:
   vmImage: 'windows-latest'
@@ -40,29 +42,29 @@ stages:
       inputs:
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
-  - job: Publishing
-    dependsOn: UnitTests
-    condition: succeeded()
-    steps:
-    - task: DotNetCoreCLI@2
-      displayName: 'Publish the project - Release'
-      inputs:
-        command: 'publish'
-        projects: '**/*.csproj'
-        publishWebProjects: false
-        arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)/Release'
-        zipAfterPublish: true
-    - publish: '$(Build.ArtifactStagingDirectory)'
-      artifact: 'WebbApp'
-
-- stage: Prod
-  jobs:
-  - job: Deploy
-    steps:
-    - download: current
-      artifact: 'WebbApp'
-    - task: AzureWebApp@1
-      inputs:
-        azureSubscription: '$(azureSubscriptionID)'
-        appName: 'sienpomodoro'
-        package: $(Pipeline.Workspace)/**/*.zip  
+#  - job: Publishing
+#    dependsOn: UnitTests
+#    condition: succeeded()
+#    steps:
+#    - task: DotNetCoreCLI@2
+#      displayName: 'Publish the project - Release'
+#      inputs:
+#        command: 'publish'
+#        projects: '**/*.csproj'
+#        publishWebProjects: false
+#        arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)/Release'
+#        zipAfterPublish: true
+#    - publish: '$(Build.ArtifactStagingDirectory)'
+#      artifact: 'WebbApp'
+#
+#- stage: Prod
+#  jobs:
+#  - job: Deploy
+#    steps:
+#    - download: current
+#      artifact: 'WebbApp'
+#    - task: AzureWebApp@1
+#      inputs:
+#        azureSubscription: '$(azureSubscriptionID)'
+#        appName: 'sienpomodoro'
+#        package: $(Pipeline.Workspace)/**/*.zip  
