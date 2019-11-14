@@ -53,14 +53,14 @@ stages:
         arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)/Release'
         zipAfterPublish: true
     - publish: '$(Build.ArtifactStagingDirectory)'
-      artifact: drop
+      artifact: 'WebbApp'
 
 - stage: Prod
   jobs:
   - job: Deploy
     steps:
     - download: current
-      artifact: 'drop'
+      artifact: 'WebbApp'
     - task: AzureWebApp@1
       inputs:
         azureSubscription: '$(azureSubscriptionID)'
