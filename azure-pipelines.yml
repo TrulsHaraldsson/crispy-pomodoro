@@ -10,6 +10,7 @@ pool:
   vmImage: 'windows-latest'
 
 stages:
+- stage: Development
   variables:
   - name: solution
     value: '**/*.sln'
@@ -17,8 +18,6 @@ stages:
     value: 'Any CPU'
   - name: buildConfiguration
     value: 'Release'
-    
-- stage: Development
   jobs:
   - job: Build
     steps:
