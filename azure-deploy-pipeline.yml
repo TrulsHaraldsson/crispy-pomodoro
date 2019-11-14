@@ -6,7 +6,7 @@
 trigger:  # We only want to trigger the deployment when master is updated
 - master
 
-pr: none  # Preventing this to run on Pull Requests that are being updated.
+pr: none  # Preventing this to run on pull requests that are being updated.
 
 pool:
   vmImage: 'windows-latest'

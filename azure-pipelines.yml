@@ -3,10 +3,10 @@
 # Add steps that publish symbols, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
 
-trigger: none
+trigger: none   # Do not trigger this on non-pull requests
 
 pr:
-  - feature/*
+  - feature/*   # Trigger this pipeline if a pull request is created or updated
 
 pool:
   vmImage: 'windows-latest'
