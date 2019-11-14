@@ -39,54 +39,29 @@ stages:
       inputs:
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
-  - job: Printing
+  - job: Publishing
     dependsOn: UnitTests
+    condition: succeeded()
     steps:
-    - bash: echo "Workspace" $(Pipeline.Workspace)
-    - bash: echo "Source Directory" $(Build.SourceDirectory)
-    - bash: echo "Artifact Staging Directory" $(Build.ArtifactStagingDirectory)
-    - bash: echo "Binary Directory" $(Build.BinariesDirectory)
-    - bash: echo "Test Result Directory" $(Common.TestResultsDirectory)
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish the project - Release'
+      inputs:
+        command: 'publish'
+        projects: '**/*.csproj'
+        publishWebProjects: false
+        arguments: '--no-build --configuration Release --output $(Build.ArtifactStagingDirectory)/Release'
+        zipAfterPublish: true
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: drop'
+      condition: succeeded()
 
 - stage: Production
   jobs:
   - job: Deploy
     steps:
-    - bash: echo "Deploying to production"
-
-#  steps:
-#  - task: NuGetToolInstaller@1
-#  
-#  - task: NuGetCommand@2
-#    inputs:
-#      restoreSolution: '$(solution)'
-#  
-#  - task: VSBuild@1
-#    inputs:
-#      solution: '$(solution)'
-#      platform: '$(buildPlatform)'
-#      configuration: '$(buildConfiguration)'
-#  
-#  - task: VSTest@2
-#    inputs:
-#      platform: '$(buildPlatform)'
-#      configuration: '$(buildConfiguration)'
-#      
-#  - task: DotNetCoreCLI@2
-#    displayName: 'Publish the project - Release'
-#    inputs:
-#      command: 'publish'
-#      projects: '**/*.csproj'
-#      publishWebProjects: false
-#      arguments: '--no-build --configuration Release --output $(Build.ArtifactStagingDirectory)/Release'
-#      zipAfterPublish: true
-#  
-#  - task: PublishBuildArtifacts@1
-#    displayName: 'Publish Artifact: drop'
-#    condition: succeeded()
-    
-#- task: AzureWebApp@1
-#  inputs:
-#    azureSubscription: '$(azureSubscriptionID)'
-#    appName: 'sienpomodoro'
-#    package: $(System.ArtifactsDirectory)/**/*.zip   
+    - task: AzureWebApp@1
+      inputs:
+        azureSubscription: '$(azureSubscriptionID)'
+        appName: 'sienpomodoro'
+        package: $(System.ArtifactsDirectory)/**/*.zip  
