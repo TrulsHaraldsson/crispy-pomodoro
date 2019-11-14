@@ -1,5 +1,6 @@
 # crispy-pomodoro
-The Pomodoro Technique is a time management method.
+The Pomodoro Technique is a time management method that works as follows: work for 25 minutes, then rest for 5 minutes.
+Then repeat that cycle four times. After the fourth cycle take a longer break e.g. 15-20 minutes.
 
 # Azure DevOps
 This project is also for me to practise DevOps and chose Azure DevOps as a way to do that.
