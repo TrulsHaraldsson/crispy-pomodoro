@@ -9,8 +9,11 @@ trigger:
 pool:
   vmImage: 'windows-latest'
 
+variables:
+- group: Pomodoro           # Contains azureSubscriptionID
+  
 stages:
-- stage: Development
+- stage: Dev
   variables:
   - name: solution
     value: '**/*.sln'
@@ -52,9 +55,7 @@ stages:
     - publish: '$(Build.ArtifactStagingDirectory)'
       artifact: drop
 
-- stage: Production
-  variables:
-  - group: Pomodoro           # Contains azureSubscriptionID
+- stage: Prod
   jobs:
   - job: Deploy
     steps:
