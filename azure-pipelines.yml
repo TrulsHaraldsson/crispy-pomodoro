@@ -65,4 +65,4 @@ stages:
       inputs:
         azureSubscription: '$(azureSubscriptionID)'
         appName: 'sienpomodoro'
-        package: $(System.ArtifactsDirectory)/**/*.zip  
+        package: $(Pipeline.Workspace)/**/*.zip  
