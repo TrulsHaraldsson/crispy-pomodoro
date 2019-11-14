@@ -9,16 +9,15 @@ trigger:
 pool:
   vmImage: 'windows-latest'
 
-variables:
-- group: Pomodoro           # Contains azureSubscriptionID
-- name: solution
-  value: '**/*.sln'
-- name: buildPlatform
-  value: 'Any CPU'
-- name: buildConfiguration
-  value: 'Release'
-
 stages:
+  variables:
+  - name: solution
+    value: '**/*.sln'
+  - name: buildPlatform
+    value: 'Any CPU'
+  - name: buildConfiguration
+    value: 'Release'
+    
 - stage: Development
   jobs:
   - job: Build
@@ -53,11 +52,10 @@ stages:
         zipAfterPublish: true
     - publish: '$(Build.ArtifactStagingDirectory)'
       artifact: drop
-  #    - task: PublishBuildArtifacts@1
-  #      displayName: 'Publish Artifact: drop'
-#      condition: succeeded()
 
 - stage: Production
+  variables:
+  - group: Pomodoro           # Contains azureSubscriptionID
   jobs:
   - job: Deploy
     steps:
