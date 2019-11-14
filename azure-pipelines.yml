@@ -59,6 +59,8 @@ stages:
   jobs:
   - job: Deploy
     steps:
+    - download: current
+      artifact: 'drop'
     - task: AzureWebApp@1
       inputs:
         azureSubscription: '$(azureSubscriptionID)'
